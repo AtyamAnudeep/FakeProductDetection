@@ -1,0 +1,138 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+		div {
+  
+  border: 3px solid black;
+  background-color: #B3B6B7;
+  padding-top: 100px;
+  padding-right: 100px;
+  padding-bottom: 100px;
+  padding-left: 100px;
+}
+div2{
+font-size:25px;
+ font-family: Arial, Helvetica, sans-serif;
+}
+		
+</style>
+<!-- <script type="text/javascript" src="{{ url_for('static', filename='image-picker.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='image-picker.min.js') }}"></script> -->
+</head>
+   <body>
+   
+   <br>
+   <br>
+   
+
+   <!-- <div id='fileNames'>
+     <img src="{{ url_for('static', filename='img.jpg') }}">
+   </div> -->
+  
+  <!-- <img src="static/img.jpg"> -->
+<center><h2>Comparing the original and sample image</h2></center>
+   <center><div>
+      <form action = "http://localhost:5000/uploader" method = "POST" 
+         enctype = "multipart/form-data">
+         Sample image : <input type = "file" name = "file1" id="profile-img" value="browse..." />
+		 <img src="" alt="sample image" id="profile-img-tag" width="200px" height="200px" />
+<!--          <input type = "file"  name="file2" id="profile-img1"/>
+ -->		 <img src="" alt="original image" id="profile-img-tag1"  width="200px" height="200px" />
+        <!-- <input type="text" name="algo" />-->
+        <input type="hidden" name="f2" id="org" value="imgname">
+         <input type = "submit" class="w3-btn w3-black"/>
+      </form>
+	  
+    <form action="http://localhost:5000/original" method="POST">
+      Categories
+      <select name='cat'>
+        <option>shoes</option>
+        <option>shirts</option>
+      </select>
+      Brand
+      <select name='brand'>
+        <option>Adidas</option>
+        <option>Nike</option>
+      </select>
+      <input type="submit" value="show similar" class="w3-btn w3-black">
+    </form>
+
+    
+    {% for file in files %}
+    <img src={{path+'/'+file}} width="200px" height="200px">
+    <!-- <option style="background-image:url({{ url_for('static', filename=file) }});">{{file}}</option> -->
+    <!-- <option > <img src="{{ url_for('static', filename=file) }}">  {{ file }}</option> -->
+    {% endfor %}
+  <select id="original">
+    {% for file in files %}
+        <option > {{ file }}</option>
+    {% endfor %}
+  </select>
+  </div>
+    </center>
+
+
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='require.js') }}"></script> -->
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
+	  <script type="text/javascript"> 
+    // var fs = require('fs');
+    // var files = fs.readdirSync('D:/Project/pyyyyythh[onm/Technoutsav/Image-Similarity-master/Final');
+    // console.log(files);
+    // const testFolder = './templates';
+    // const fs = require('fs');
+
+    // fs.readdir(testFolder, (err, files) => {
+    //   files.forEach(file => {
+    //     console.log(file);
+    //   });
+    // });
+
+//     var fileExt = {};
+//     fileExt[0]=".png";
+//     fileExt[1]=".jpg";
+//     fileExt[2]=".gif";
+// $.ajax({
+//     //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+//     url: '{{ url_for('static', filename='img') }}',
+//     success: function (data) {
+//        $("#fileNames").html('<ul>');
+//        //List all png or jpg or gif file names in the page
+//        $(data).find("a:contains(" + fileExt[0] + "),a:contains(" + fileExt[1] + "),a:contains(" + fileExt[2] + ")").each(function () {
+//            var filename = this.href.replace(window.location.host, "").replace("http:///", "");
+//            $("#fileNames").append( "<li>" + filename + "</li>");
+//        });
+//        $("#fileNames").append('</ul>');
+//      }     
+//   });
+
+    function readURL(input,z) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                if(z.localeCompare('#profile-img-tag1')==0)
+                document.getElementById("org").value=input.files[0].name
+                $(z).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#profile-img").change(function(){
+        readURL(this,'#profile-img-tag');
+    });
+    $("#profile-img1").change(function(){
+        readURL(this,'#profile-img-tag1');
+    });
+
+    document.getElementById("original").addEventListener("change", update);
+    function update() { 
+       document.getElementById("profile-img-tag1").src="{{ path }}"+"/"+document.getElementById("original").value.toString();
+       console.log(document.getElementById("file2"))
+       document.getElementById("org").value = document.getElementById("original").value.toString();
+    }
+</script>
+
+   </body>
+</html>

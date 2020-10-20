@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>barcode</title>
+	<style>
+		div {
+  
+  border: 3px solid black;
+  background-color: #B3B6B7;
+  padding-top: 100px;
+  padding-right: 100px;
+  padding-bottom: 100px;
+  padding-left: 100px;
+}
+div2{
+font-size:25px;
+ font-family: Arial, Helvetica, sans-serif;
+}
+		
+</style>
+</head>
+<body>
+
+<center>
+<br>
+<br>
+<br>
+<br>
+<h2>Please enter the image of the barcode for the Product you would like to test!</h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>
+<form action = "http://localhost:5000/decodebar" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "bar1" id="bar1"/>
+		 <img src="" id="bar1-tag" width="200px" />
+		 <br><br><br>
+         <input type = "submit"/>
+      </form>
+      </div>
+      </center>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	  <script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#bar1-tag').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#bar1").change(function(){
+        readURL(this);
+    });
+</script>
+
+</body>
+</html>
